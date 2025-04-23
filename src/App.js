@@ -3,11 +3,13 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react'
-import { dataBase, auth } from "./database/dbFire";
+import { auth } from "./database/dbFire";
 import "./App.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
 import { ToastContainer, toast } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+
 
 function App() {
   const [name, setName] = useState('')
@@ -23,20 +25,43 @@ function App() {
   }
 
 
-  async function userRegister(){
-     await createUserWithEmailAndPassword(auth ,email, pass)
+  async function userRegister(e){
+      e.preventDefault()
+
+    if(!email && !pass){
+      toast.warn('Insira o Email e a senha para continuar')
+    }
+
+    await createUserWithEmailAndPassword(auth ,email, pass)
+
     .then(()=> {
-      toast('Usuário cadastrado com sucesso!')
-    }).catch((error) => {
-      console.log('erro ao cadastrar ' + error)
+      console.log('Usuário cadastrado com sucesso!')
+      toast.success('Usuário cadastrado com sucesso!')
+      setName('')
+      setEmail('')
+      setPass('')
+    
+    })
+    .catch((error) => {
+      console.log(error)
+
+      if(error.code === 'auth/email-already-in-use'){
+        toast.warn('Já existe um usuário com este Email')
+      } 
+      else if(error.code === 'auth/invalid-email'){
+        toast.warn('Email inválido')
+      }
+      else if(error.code === 'auth/weak-password') {
+        toast.warn('A senha deve ter pelo menos 6 caracteres!')
+      }
     })
   }
-
   return (
-    <div
-      className=" w-full h-[100vh] text-black flex bg-cover"
+    <div className=" w-full h-[100vh] text-black flex bg-cover"
       style={{ backgroundImage: `url(${img})` }}
     >
+      
+
       <div className="justify-center m-auto border w-[350px] h-[400px] rounded-[10px] bg-black/70 text-white p-4">
         <h1 className="text-center font-bold text-3xl mb-[20px] mt-[10px]">
           Cadastre-se
@@ -49,6 +74,7 @@ function App() {
             placeholder=" Digite seu nome"
             value={ name }
             onChange={ (e) => setName( e.target.value )}
+            required
           />
 
           <label className="font-bold">Email:</label>
@@ -58,6 +84,7 @@ function App() {
             placeholder=" Digite seu email"
             value={ email }
             onChange={ (e) => setEmail( e.target.value )}
+            required
           />
 
        
@@ -69,6 +96,7 @@ function App() {
               placeholder=" Digite sua senha"
               value={ pass }
               onChange={ (e) => setPass( e.target.value )}
+              required
             />
 
             <div id="button">
@@ -87,6 +115,7 @@ function App() {
           </button>
         </form>
       </div>
+      <ToastContainer autoClose={3000}/>
     </div>
   );
 }
