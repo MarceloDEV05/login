@@ -7,6 +7,8 @@ import { dataBase, auth } from "./database/dbFire";
 import "./App.css";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 
+import { ToastContainer, toast } from 'react-toastify'
+
 function App() {
   const [name, setName] = useState('')
   const [email, setEmail] = useState('')
@@ -24,7 +26,7 @@ function App() {
   async function userRegister(){
      await createUserWithEmailAndPassword(auth ,email, pass)
     .then(()=> {
-      console.log('usuario cadastrado com sucesso')
+      toast('Usuário cadastrado com sucesso!')
     }).catch((error) => {
       console.log('erro ao cadastrar ' + error)
     })
