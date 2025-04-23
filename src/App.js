@@ -3,9 +3,14 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
 import { useState } from 'react'
+import { dataBase, auth } from "./database/dbFire";
 import "./App.css";
+import { createUserWithEmailAndPassword } from "firebase/auth";
 
 function App() {
+  const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
+  const [pass, setPass] = useState('')
 
   const [inputSenha, setInputSenha] = useState(false)
 
@@ -13,6 +18,16 @@ function App() {
     e.preventDefault()
 
     setInputSenha(!inputSenha)
+  }
+
+
+  async function userRegister(){
+     await createUserWithEmailAndPassword(auth ,email, pass)
+    .then(()=> {
+      console.log('usuario cadastrado com sucesso')
+    }).catch((error) => {
+      console.log('erro ao cadastrar ' + error)
+    })
   }
 
   return (
@@ -30,13 +45,17 @@ function App() {
             className="border-b bg-transparent outline-none p-1 m-2 "
             type="text"
             placeholder=" Digite seu nome"
+            value={ name }
+            onChange={ (e) => setName( e.target.value )}
           />
 
           <label className="font-bold">Email:</label>
           <input
             className="border-b bg-transparent outline-none p-1 m-2"
             type="text"
-            placeholder=" Digite seu nome"
+            placeholder=" Digite seu email"
+            value={ email }
+            onChange={ (e) => setEmail( e.target.value )}
           />
 
        
@@ -46,6 +65,8 @@ function App() {
               className="border-b w-full bg-transparent outline-none p-1 m-2 flex-row"
               type={inputSenha ? 'password' : 'text'}
               placeholder=" Digite sua senha"
+              value={ pass }
+              onChange={ (e) => setPass( e.target.value )}
             />
 
             <div id="button">
@@ -58,6 +79,7 @@ function App() {
           <button
             className=" font-bold w-[200px] bg-purple-500 m-auto mt-[10px] p-[10px] rounded-[8px] transition ease-in-out duration-300
           delay-150 hover:bg-purple-900"
+          onClick={userRegister}
           >
             Cadastrar
           </button>
