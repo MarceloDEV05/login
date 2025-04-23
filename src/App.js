@@ -1,7 +1,20 @@
 import img from "./assets/montanha-fuji-com-via-lactea-a-noite_335224-104.avif";
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
+import { faEye } from '@fortawesome/free-solid-svg-icons'
+import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
+import { useState } from 'react'
 import "./App.css";
 
 function App() {
+
+  const [inputSenha, setInputSenha] = useState(false)
+
+  function showPass(e) {
+    e.preventDefault()
+
+    setInputSenha(!inputSenha)
+  }
+
   return (
     <div
       className=" w-full h-[100vh] text-black flex bg-cover"
@@ -26,19 +39,19 @@ function App() {
             placeholder=" Digite seu nome"
           />
 
-          <div
-            className="flex-row flex justify-between items-center"
-            id="sessao-senha"
-          >
-            <label className="font-bold flex-col flex"> Senha:</label>
+       
+            <label className="font-bold"> Senha:</label>
+            <div className="flex-row flex justify-around items-center" id="sessao-senha">
             <input
-              className="border-b bg-transparent justify-around w- outline-none p-1 m-2 flex-row"
-              type="password"
+              className="border-b w-full bg-transparent outline-none p-1 m-2 flex-row"
+              type={inputSenha ? 'password' : 'text'}
               placeholder=" Digite sua senha"
             />
 
             <div id="button">
-              <button>mostrar</button>
+              <button onClick={showPass}>
+               {inputSenha ?  <FontAwesomeIcon icon={faEyeSlash}/> : <FontAwesomeIcon icon={faEye} />}
+              </button>
             </div>
           </div>
 
