@@ -49,7 +49,7 @@ function App() {
         toast.warn('Já existe um usuário com este Email')
       } 
       else if(error.code === 'auth/invalid-email'){
-        toast.warn('Email inválido')
+        toast.error('Email inválido')
       }
       else if(error.code === 'auth/weak-password') {
         toast.warn('A senha deve ter pelo menos 6 caracteres!')
@@ -74,7 +74,7 @@ function App() {
             placeholder=" Digite seu nome"
             value={ name }
             onChange={ (e) => setName( e.target.value )}
-            required
+            
           />
 
           <label className="font-bold">Email:</label>
@@ -84,7 +84,7 @@ function App() {
             placeholder=" Digite seu email"
             value={ email }
             onChange={ (e) => setEmail( e.target.value )}
-            required
+            
           />
 
        
@@ -96,7 +96,7 @@ function App() {
               placeholder=" Digite sua senha"
               value={ pass }
               onChange={ (e) => setPass( e.target.value )}
-              required
+              
             />
 
             <div id="button">
@@ -115,7 +115,11 @@ function App() {
           </button>
         </form>
       </div>
-      <ToastContainer autoClose={3000}/>
+      <ToastContainer 
+       position="top-center" 
+       autoClose={2500}
+       theme="dark"
+       />
     </div>
   );
 }
