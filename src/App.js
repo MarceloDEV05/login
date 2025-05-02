@@ -1,4 +1,4 @@
-import img from "./assets/montanha-fuji-com-via-lactea-a-noite_335224-104.avif";
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faEye } from '@fortawesome/free-solid-svg-icons'
 import { faEyeSlash } from "@fortawesome/free-solid-svg-icons";
@@ -57,16 +57,32 @@ function App() {
     })
   }
   return (
-    <div className=" w-full h-[100vh] text-black flex bg-cover"
-      style={{ backgroundImage: `url(${img})` }}
-    >
-      
+    <div className=" w-full h-[100vh] text-black flex bg-cover">
+      <div className="justify-center flex m-auto w-[750px] h-[400px] rounded-[10px] bg-white text-black italic shadow-md shadow-purple-700">
+       
+        <div className="flex flex-col items-center justify-center text-white bg-purple-600 w-full h-full rounded-l-[10px]">
+          <div
+          className="text-center">
+           <h1 className="text-3xl font-bold">Entre no App</h1>
+           <p className="max-w-[300px] text-center">Só no App você encontra tudo o que precisa!</p>
+           </div>
 
-      <div className="justify-center m-auto border w-[350px] h-[400px] rounded-[10px] bg-black/70 text-white p-4">
-        <h1 className="text-center font-bold text-3xl mb-[20px] mt-[10px]">
-          Cadastre-se
+            <div className="mt-10 justify-center flex flex-col items-center">
+            <span>Já tem um cadastro?</span>
+              <button className=" bg-white text-black p-2 w-[150px] rounded-md italic font-bold">
+                entrar
+              </button>
+           </div>
+        </div>
+
+          
+
+        <form className="flex flex-col w-full p-6 ">
+
+        <h1 className="text-center font-bold text-3xl mb-[20px] mt-[10px] italic">
+          Login<strong className="text-purple-700 italic">App</strong>
         </h1>
-        <form className="flex flex-col ">
+
           <label className="font-bold">Nome:</label>
           <input
             className="border-b bg-transparent outline-none p-1 m-2 "
@@ -108,7 +124,7 @@ function App() {
 
           <button
             className=" font-bold w-[200px] bg-purple-500 m-auto mt-[10px] p-[10px] rounded-[8px] transition ease-in-out duration-300
-          delay-150 hover:bg-purple-900"
+          delay-150 hover:bg-purple-900 text-white"
           onClick={userRegister}
           >
             Cadastrar
